@@ -27,6 +27,11 @@ class TaskViewModel: ViewModel() {
     fun setCompleted(taskItem: TaskItem) {
         val list = taskItems.value ?: mutableListOf()
         val task = list.find{ it.id == taskItem.id }
+        when {
+            task != null -> {
+                task.toggleCompleted()
+            }
+        }
         taskItems.postValue(list)
     }
 }
