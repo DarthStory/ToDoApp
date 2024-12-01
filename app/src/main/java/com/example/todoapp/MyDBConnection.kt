@@ -26,7 +26,7 @@ class MyDBConnection(context: Context, dbName:String, dbVersion: Int): SQLiteOpe
         db?.execSQL("DROP TABLE IF EXISTS $tableName")
         db?.execSQL(query)
     }
-    fun insert(task: TaskItem): Long {
+    fun insertTask(task: TaskItem): Long {
         val db = writableDatabase
         val contentValues = ContentValues().apply {
             put(col2, task.name)
