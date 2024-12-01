@@ -18,29 +18,26 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val activity = requireActivity()
-
-        if(taskItem != null) {
-            binding.taskTitle.text = "Edit Task"
-            val editable = Editable.Factory.getInstance()
-            binding.name.text = editable.newEditable(taskItem!!.name)
-            binding.desc.text = editable.newEditable(taskItem!!.desc)
-        } else {
-            binding.taskTitle.text = "New Task"
-        }
-
         taskViewModel = ViewModelProvider(activity)[TaskViewModel::class.java]
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNewTaskSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if(taskItem != null) {
+            binding.taskTitle.text = binding.editTask.text
+            val editable = Editable.Factory.getInstance()
+            binding.name.text = editable.newEditable(taskItem!!.name)
+            binding.desc.text = editable.newEditable(taskItem!!.desc)
+        } else {
+            binding.taskTitle.text = binding.newTask.text
+        }
+
         binding.saveButton.setOnClickListener {
             saveAction()
         }

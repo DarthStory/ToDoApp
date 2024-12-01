@@ -7,6 +7,21 @@
     android:layout_height="wrap_content"
     tools:context=".NewTaskSheet">
 
+
+    <TextView
+        android:id="@+id/editTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editTask"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/newTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/newTask"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/taskTitle"
         style="@style/TextAppearance.AppCompat.Title"
