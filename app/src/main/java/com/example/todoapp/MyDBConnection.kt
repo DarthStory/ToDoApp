@@ -9,59 +9,59 @@ import android.database.sqlite.SQLiteOpenHelper
 class MyDBConnection(context: Context, dbName:String, dbVersion: Int): SQLiteOpenHelper(context, dbName, null, dbVersion) {
 
     companion object{
-        const val tableName: String = "ToDo"
-        const val col1 ="Uid"
-        const val col2 ="name"
-        const val col3 ="description"
-        const val col4 = "isCompleted"
+        const val TABLENAME: String = "ToDo"
+        const val COL1 ="Uid"
+        const val COL2 ="name"
+        const val COL3 ="description"
+        const val COL4 = "isCompleted"
     }
     private val query =
-        "CREATE TABLE $tableName ($col1 INTEGER PRIMARY KEY AUTOINCREMENT, $col2 TEXT, $col3 TEXT, $col4 INTEGER)"
+        "CREATE TABLE $TABLENAME ($COL1 INTEGER PRIMARY KEY AUTOINCREMENT, $COL2 TEXT, $COL3 TEXT, $COL4 INTEGER)"
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(query)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("DROP TABLE IF EXISTS $tableName")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLENAME")
         db?.execSQL(query)
     }
     fun insertTask(task: TaskItem): Long {
         val db = writableDatabase
         val contentValues = ContentValues().apply {
-            put(col2, task.name)
-            put(col3, task.desc)
-            put(col4, if (task.isCompleted()) 1 else 0)
+            put(COL2, task.name)
+            put(COL3, task.desc)
+            put(COL4, if (task.isCompleted()) 1 else 0)
         }
-        return db.insert(tableName, null, contentValues)
+        return db.insert(TABLENAME, null, contentValues)
     }
     fun updateTask(task: TaskItem): Int {
         val db = writableDatabase
         val contentValues = ContentValues().apply {
-            put(col2, task.name)
-            put(col3, task.desc)
-            put(col4, if (task.isCompleted()) 1 else 0)
+            put(COL2, task.name)
+            put(COL3, task.desc)
+            put(COL4, if (task.isCompleted()) 1 else 0)
         }
-        return db.update(tableName, contentValues, "$col1=?", arrayOf(task.id.toString()))
+        return db.update(TABLENAME, contentValues, "$COL1=?", arrayOf(task.id.toString()))
     }
 
     fun deleteTask(id: String): Int {
         val db = writableDatabase
-        return db.delete(tableName, "$col1=?", arrayOf(id))
+        return db.delete(TABLENAME, "$COL1=?", arrayOf(id))
     }
 
     fun getAllTasks(): MutableList<TaskItem> {
         val db = readableDatabase
         val cursor: Cursor = db.query(
-            tableName, null, null, null, null, null, null
+            TABLENAME, null, null, null, null, null, null
         )
         val tasks = mutableListOf<TaskItem>()
         if (cursor.moveToFirst()) {
             do {
-                val id = cursor.getInt(cursor.getColumnIndexOrThrow(col1))
-                val name = cursor.getString(cursor.getColumnIndexOrThrow(col2))
-                val desc = cursor.getString(cursor.getColumnIndexOrThrow(col3))
-                val isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(col4)) == 1
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(COL1))
+                val name = cursor.getString(cursor.getColumnIndexOrThrow(COL2))
+                val desc = cursor.getString(cursor.getColumnIndexOrThrow(COL3))
+                val isCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(COL4)) == 1
                 tasks.add(TaskItem(name, desc, id, isCompleted))
             } while (cursor.moveToNext())
         }

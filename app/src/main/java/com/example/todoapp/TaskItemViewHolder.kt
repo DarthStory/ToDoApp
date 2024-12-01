@@ -18,7 +18,7 @@ class TaskItemViewHolder(private val context: Context, private val binding: Task
         binding.completeButton.setImageResource(taskItem.imageResource())
         binding.completeButton.setColorFilter(taskItem.imageColor(context))
 
-        binding.completeButton.setOnClickListener() {
+        binding.completeButton.setOnClickListener {
             clickListener.completeTaskItem(taskItem)
         }
 
