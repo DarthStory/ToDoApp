@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity(),  TaskItemClickListener{
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val dbcon:MyDBConnection= MyDBConnection(this@MainActivity, "ToDoDB", 1)
         taskViewModel = ViewModelProvider(this)[TaskViewModel::class.java]
         binding.newTaskButton.setOnClickListener {
             NewTaskSheet(null).show(supportFragmentManager, "newTaskTag")
